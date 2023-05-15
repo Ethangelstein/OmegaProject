@@ -1,0 +1,392 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  box-sizing: inherit;
+  height: 100%;
+}
+
+body {
+  all: unset;
+  font-family: sans-serif;
+  height: 100%;
+  display: block;
+  margin: 0;
+  background-image: url(https://img.freepik.com/vector-premium/patron-hojas-circulos-diferentes-colores-fondo-pantalla-patrones-fisuras_635153-64.jpg);
+  position: relative;
+}
+
+nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  display: flex;
+  justify-content: space-between;
+  z-index: 2;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  width: max-content;
+}
+
+li {
+  display: flex;
+  position: relative;
+  transition: 0.3s;
+}
+
+li a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+li::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  left: 0;
+  bottom: 0;
+  transition: transform 0.5s;
+  transform: scaleX(0);
+  transform-origin: right;
+  z-index: 3;
+  background-color: #4caf50;
+}
+
+li:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.active {
+  background-color: #4caf50;
+}
+
+.navRight {
+  display: flex;
+  gap: 1rem;
+}
+
+.user {
+  align-items: center;
+}
+
+.user:hover {
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+@media (max-width: 480px) {
+  .dropdown {
+    display: none;
+  }
+}
+
+.dropdown-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 16px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  height: 100%;
+  width: 160px;
+}
+
+.dropdown-content {
+  position: absolute;
+  width: 100%;
+  background-color: #eee;
+  right: 0;
+  transform: translateY(-100%);
+  transition: 300ms transform ease-out;
+  z-index: -1;
+  border-radius: 0 0 8px 8px;
+  overflow: hidden;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-btn {
+  background-color: #3e8e41;
+}
+
+.dropdown:hover .dropdown-content {
+  transform: translate(0);
+  box-shadow: 0px 8px 4px rgba(0, 0, 0, 0.2);
+}
+
+main {
+  background-color: transparent;
+  display: grid;
+  place-items: center;
+  padding: 0 1rem;
+  height: 100%;
+  backdrop-filter: blur(1.5px) brightness(95%);
+  position: relative;
+}
+
+.box {
+  max-width: 1000px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+@media only screen and (max-device-width: 480px) {
+  .box {
+    max-width: initial;
+    margin: 0 1rem;
+  }
+}
+
+h2 {
+  margin: 0.5rem 0 1.2rem 0;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+input:invalid {
+  animation: shake 0.14s 3;
+}
+
+input:valid {
+  outline-color: #4bb543;
+  animation: none;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    outline-color: #dc143c;
+    translate: 0;
+  }
+  25% {
+    translate: 8px 0;
+    outline-color: #dc143c;
+  }
+  75% {
+    translate: -8px 0;
+    outline-color: #dc143c;
+  }
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
+
+.submit {
+  width: 100%;
+  background-color: #4caf50;
+  color: #ffffff;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 150ms transform ease-out;
+  font-size: 18px;
+}
+
+.submit:hover {
+  transform: scale(1.02);
+}
+
+.termsAndConditions {
+  --checkbox-width: 20px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.termsLink {
+  color: green;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.hideCheckbox {
+  display: none;
+}
+
+.checkbox {
+  box-sizing: border-box;
+  display: block;
+  border: 2px solid #434343;
+  border-radius: 6px;
+  transition: border 375ms, width 375ms, transform 375ms, margin-left 375ms;
+  width: var(--checkbox-width);
+  height: var(--checkbox-width);
+  cursor: pointer;
+  margin-bottom: 3px;
+}
+
+.hideCheckbox:checked + .checkbox {
+  transform: rotate(45deg);
+  width: calc(var(--checkbox-width) / 2);
+  height: var(--checkbox-width);
+  margin-left: 6.4px;
+  margin-bottom: 3px;
+  border-width: 2.5px;
+  border-color: #24c78e;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-radius: 0;
+}
+
+*:focus *:active {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  display: flex;
+  gap: 1rem;
+  position: absolute;
+  left: 50%;
+  bottom: 1rem;
+  transform: translateX(-50%);
+}
+
+.linkContainer {
+  position: relative;
+  --link-width: 30px;
+}
+
+.link {
+  aspect-ratio: 1;
+  background-color: black;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  text-decoration: none;
+  color: white;
+}
+
+.linkContainer[social="facebook"] a:hover {
+  background-color: #1876f2;
+}
+
+.linkContainer[social="facebook"] .tooltip {
+  background-color: #1876f2;
+}
+
+.linkContainer[social="twitter"] a:hover {
+  background-color: #1c9cea;
+}
+
+.linkContainer[social="twitter"] .tooltip {
+  background-color: #1c9cea;
+}
+
+.linkContainer[social="instagram"] a:hover {
+  background: linear-gradient(135deg, #515bd4, #8134af, #dd2a7b, #feda77, #f58529);
+}
+
+.linkContainer[social="instagram"] .tooltip {
+  background-color: #8134af;
+}
+
+.linkContainer[social="github"] a:hover {
+  background-color: #212121;
+}
+
+.linkContainer[social="github"] .tooltip {
+  background-color: #212121;
+}
+
+.linkContainer[social="youtube"] a:hover {
+  background-color: #ff0000;
+}
+
+.linkContainer[social="youtube"] .tooltip {
+  background-color: #ff0000;
+}
+
+.tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  z-index: -1;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 150ms ease-out;
+  border-radius: 5px;
+  padding: 0.5rem;
+  display: flex;
+  color: white;
+}
+
+@media (hover) {
+  .link:hover + .tooltip {
+    opacity: 1;
+    transform: translate(-50%, calc(-100% - var(--link-width) - 5px));
+  }
+}
+
+.gallery {
+  display: flex;
+  height: 20rem;
+  gap: 1rem;
+}
+
+.gallery > .image {
+  flex: 1;
+  border-radius: 1rem;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+  transition: all 800ms ease;
+}
+
+.gallery > .image:hover {
+  flex: 5;
+}
+
+.image {
+  object-fit: contain;
+}
+
+
