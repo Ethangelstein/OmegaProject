@@ -1,3 +1,7 @@
+# IDE
 .vscode
+
+# Environment
 __pycache__
 venv
+.env
