@@ -287,6 +287,7 @@ input::-webkit-inner-spin-button {
 }
 
 .linkContainer {
+  z-index: 1;
   position: relative;
   --link-width: 30px;
 }
@@ -354,7 +355,7 @@ input::-webkit-inner-spin-button {
   border-radius: 5px;
   padding: 0.5rem;
   display: flex;
-  color: white;
+  color: white ;
 }
 
 @media (hover) {
