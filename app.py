@@ -19,12 +19,6 @@ cursor = midb.cursor(
 def main():
     cursor.execute("select * from user")
     users = cursor.fetchall()
-    # abort(403)
-    # return redirect(url_for('Salame', post_id=2))
-    # print(request.form)
-    # print(request.form['llave1'])
-    # print(request.form['llave2'])
-    # return render_template('Cheese.html')
 
     return render_template("index.html", users=users)
 
