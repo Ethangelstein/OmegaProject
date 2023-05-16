@@ -52,7 +52,6 @@ def signup():
         sql = "insert into user (username, email, password) values(%s, %s, %s)"
 
         # Hash password
-
         salt = "NJOXSA?!#"
 
         # Concatenar la contraseña y la salt
@@ -82,26 +81,9 @@ def throwErrorTemplate(field, reason, value):
     return render_template("error.html", field=field, reason=reason, value=value)
 
 
-# -------------------------------------------------------------------------------------------
-
-
 @app.route("/")
 def index():
     return "Live :D"
-
-
-@app.route("/Home", methods=["GET"])
-def home():
-    return render_template("Home.html", mensaje="Hola Mundo")
-
-
-# GET, POST, PUT, PATCH, DELETE
-@app.route("/post/<post_id>", methods=["GET", "POST"])
-def Salame(post_id):
-    if request.method == "GET":
-        return "El id del post es " + post_id
-    else:
-        return "Este es otro metodo y no GET"
 
 
 if __name__ == "__main__":
