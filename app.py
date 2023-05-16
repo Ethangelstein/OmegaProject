@@ -1,16 +1,13 @@
 import re
 from flask import Flask, request, url_for, redirect, abort, render_template
 import hashlib
+from database.database import database
 
 app = Flask(__name__)
 
-import mysql.connector
+db = database.connect()
 
-midb = mysql.connector.connect(
-    host="localhost", user="root", password="mysql", database="omega"
-)
-
-cursor = midb.cursor(
+cursor = db.cursor(
     dictionary=True,
 )
 
