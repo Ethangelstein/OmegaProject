@@ -1,12 +1,13 @@
 import re
 from flask import Flask, request, url_for, redirect, abort, render_template
+import hashlib
 
 app = Flask(__name__)
 
 import mysql.connector
 
 midb = mysql.connector.connect(
-    host="localhost", user="EthanG", password="eThñ921723%&", database="omega"
+    host="localhost", user="root", password="mysql", database="omega"
 )
 
 cursor = midb.cursor(
@@ -31,23 +32,36 @@ def main():
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
     if request.method == "POST":
-        print(request.form)
         username = request.form["username"]
         email = request.form["email"]
-        age = int(request.form["age"])
+        password = request.form["password"]
 
         # Checks
-        if is_age_incorrect(age):
-            reason = "menor" if age <= 0 else "mayor"
+        if is_password_incorrect(password):
+            password_length = len(password)
+            MIN_PASSWORD_LENGTH = 8
+            reason = "menor" if password_length < MIN_PASSWORD_LENGTH else "mayor"
 
-            return throwErrorTemplate(field="Age", reason=reason, value=age)
+            return throwErrorTemplate(
+                field="Password", reason=reason, value=MIN_PASSWORD_LENGTH
+            )
 
         if not is_valid_email(email):
             return throwErrorTemplate(field="Email", reason="igual", value=email)
 
-        sql = "insert into user (username, email, age) values(%s, %s, %s)"
+        sql = "insert into user (username, email, password) values(%s, %s, %s)"
 
-        values = (username, email, age)
+        # Hash password
+
+        salt = "NJOXSA?!#"
+
+        # Concatenar la contraseña y la salt
+        salted_password = password.encode("utf-8") + salt.encode("utf-8")
+
+        # Calcular el hash SHA256 de la contraseña y la salt
+        hashed_password = hashlib.sha256(salted_password).hexdigest()
+
+        values = (username, email, hashed_password)
         cursor.execute(sql, values)
         midb.commit()
 
@@ -55,8 +69,8 @@ def signup():
     return render_template("signup.html")
 
 
-def is_age_incorrect(age):
-    return age <= 0 or age >= 100
+def is_password_incorrect(password):
+    return len(password) <= 8 or len(password) >= 50
 
 
 def is_valid_email(email):
@@ -73,7 +87,7 @@ def throwErrorTemplate(field, reason, value):
 
 @app.route("/")
 def index():
-    return "Hola Mundo"
+    return "Live :D"
 
 
 @app.route("/Home", methods=["GET"])
@@ -91,4 +105,4 @@ def Salame(post_id):
 
 
 if __name__ == "__main__":
-    app.run(host="192.168.0.66", port=5000)
+    app.run()
