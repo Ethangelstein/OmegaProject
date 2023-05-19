@@ -1,5 +1,5 @@
 from flask import render_template
 
 
-def throwErrorTemplate(field, reason, value):
-    return render_template("error.html", field=field, reason=reason, value=value)
+def throwErrorTemplate(message="Error inesperado"):
+    return render_template("error.html", message=message)
