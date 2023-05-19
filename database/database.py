@@ -3,46 +3,43 @@ import click
 
 from flask import current_app, g as context
 from flask.cli import with_appcontext
-from schema import instructions
+from .schema import instructions
 
 
-class Database:
-    def __init__(self, host, user, password, database):
-        self.host = host
-        self.user = user
-        self.password = password
-        self.database = database
+def init_app(app):
+    app.teardown_appcontext(close_db)
+    app.cli.add_command(init_db_command)
 
-    def connect(self):
-        try:
-            database = mysql.connector.connect(
+
+@click.command("init-db")
+@with_appcontext
+def init_db_command():
+    init_db()
+    click.echo("DB initialized")
+
+
+def init_db():
+    database, cursor = get_db()
+    for i in instructions:
+        cursor.execute(i)
+    database.commit()
+
+
+def get_db():
+    try:
+        if "database" not in context:
+            context.database = mysql.connector.connect(
                 host=current_app.config["DATABASE_HOST"],
                 user=current_app.config["DATABASE_USER"],
                 password=current_app.config["DATABASE_PASSWORD"],
                 database=current_app.config["DATABASE"],
             )
 
-            return database
-        except BaseException as error:
-            print("Couldn't connect to MySQL DB")
-            exit(1)
+            context.cursor = context.database.cursor(dictionary=True)
 
-    def init_app(app):
-        app.teardown_appcontext(close_db)
-        app.cli.add_command(init_db_command)
+        return context.database, context.cursor
 
-    @click.command("init-db")
-    @with_appcontext
-    def init_db_command():
-        init_db()
-        click.echo("Base de datos inicializada")
-
-    def init_db():
-        db, c = get_db()
-        for i in instructions:
-            c.execute(i)
-
-        db.commit()
-
-
-database = Database("localhost", "root", "eThñ921723%&", "omega")
+    except BaseException as error:
+        print("Couldn't connect to MySQL DB")
+        print(error)
+        exit(1)
