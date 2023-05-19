@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="static/images/Omega.png" />
     <title>Omega - Error</title>
-    <link rel="stylesheet" href="../static/styles.css" />
+    <link rel="stylesheet" href="../static/error.css" />
   </head>
   <body>
     <nav>
@@ -47,9 +47,26 @@
     </nav>
     <main>
       <div class="box">
-        <h1>Error</h1>
+        <div class="headingContainer">
+          <svg
+            viewBox="0 0 24 24"
+            width="48"
+            height="48"
+            stroke="#09f"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="infoIcon"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <h1>Error</h1>
+        </div>
         <h3>Ups... Algo salió mal</h3>
-        <p>El campo {{field}} no puede tener un valor {{reason}} a {{value}}</p>
+        <p>{{message}}</p>
       </div>
     </main>
   </body>
