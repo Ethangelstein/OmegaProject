@@ -27,10 +27,13 @@ def signup():
         email = form.get("email")
         password = form.get("password")
 
-        database, cursor = get_db()
+        try:
+            database, cursor = get_db()
+        except BaseException as error:
+            return throwErrorTemplate(f"Server Error: {error}")
 
         if not username:
-            return throwErrorTemplate(field="Username", reason="igual", value=username)
+            return throwErrorTemplate("El username tiene que estar completo")
 
         sql = "select * from user where email = %s"
 
@@ -39,7 +42,7 @@ def signup():
         found_users_emails = [user.get("email") for user in cursor.fetchall()]
 
         if email in found_users_emails:
-            return throwErrorTemplate(field="Email", reason="igual", value=email)
+            return throwErrorTemplate(f"El email {email} ya está en uso")
 
         # Checks
         if is_password_incorrect(password):
@@ -48,11 +51,11 @@ def signup():
             reason = "menor" if password_length < MIN_PASSWORD_LENGTH else "mayor"
 
             return throwErrorTemplate(
-                field="Password", reason=reason, value=MIN_PASSWORD_LENGTH
+                f"La contraseña tiene que ser mayor a {MIN_PASSWORD_LENGTH} caracteres"
             )
 
         if not is_valid_email(email):
-            return throwErrorTemplate(field="Email", reason="igual", value=email)
+            return throwErrorTemplate(f"El email {email} es invalido")
 
         sql = "insert into user (username, email, password) values(%s, %s, %s)"
 
