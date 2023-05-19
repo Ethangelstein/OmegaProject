@@ -15,7 +15,10 @@ body {
   --btn-active: #4caf50;
   --btn-active-hover: #3e8e41;
   --transition: 0.3s;
-  --background-theme: blur(2px) brightness(85%);
+  --background-theme: blur(3px) brightness(85%);
+  --dropdown-background-color:#fff;
+  --dropdown-text-color: #000;
+  --dropdown-hover-background:#eee;
 
   all: unset;
   font-family: sans-serif;
@@ -34,7 +37,10 @@ body {
   --borde-color: #a06cd5;
   --btn-active: #a06cd5;
   --btn-active-hover: #6247aa;
-  --background-theme: invert(1) blur(2px) brightness(50%);
+  --background-theme: invert(1) blur(3px) brightness(50%);
+  --dropdown-background-color: #333;
+  --dropdown-text-color: #fff;
+  --dropdown-hover-background: #444;
 }
 
 nav {
@@ -110,6 +116,20 @@ li:hover::after {
   cursor: pointer;
 }
 
+.themeSwitcher {
+  align-items: center;
+  align-self: center;
+  border: none;
+  outline: none;
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  aspect-ratio: 1;
+  border-radius: 100rem;
+  background: #333333;
+  box-shadow: 5px 5px 11px #2b2b2b, -5px -5px 11px #4b4b4b;
+}
+
 .dropdown {
   position: relative;
 }
@@ -135,7 +155,7 @@ li:hover::after {
 .dropdown-content {
   position: absolute;
   width: 100%;
-  background-color: #eee;
+  background-color: var(--dropdown-background-color);
   right: 0;
   transform: translateY(-100%);
   transition: 300ms transform ease-out;
@@ -145,14 +165,14 @@ li:hover::after {
 }
 
 .dropdown-content a {
-  color: black;
+  color: var(--dropdown-text-color);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: var(--dropdown-hover-background);
 }
 
 .dropdown:hover .dropdown-btn {
