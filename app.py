@@ -14,10 +14,8 @@ cursor = db.cursor(
 
 @app.route("/", methods=["GET"])
 def main():
-    cursor.execute("select * from user")
-    users = cursor.fetchall()
 
-    return render_template("index.html", users=users)
+    return render_template("index.html", theme="dark")
 
 
 @app.route("/signup", methods=["GET", "POST"])
