@@ -9,12 +9,13 @@ html {
 
 body {
   --box-background: #fff;
-  --btn-dropdown-color:#4caf50;
-  --btn-dropdown-color-hover:#3e8e41;
-  --borde-color:#4caf50;
-  --btn-active:#4caf50;
-  --btn-active-hover:#3e8e41;
-  --transition: .3s;
+  --btn-dropdown-color: #4caf50;
+  --btn-dropdown-color-hover: #3e8e41;
+  --borde-color: #4caf50;
+  --btn-active: #4caf50;
+  --btn-active-hover: #3e8e41;
+  --transition: 0.3s;
+  --background-theme: blur(2px) brightness(85%);
 
   all: unset;
   font-family: sans-serif;
@@ -28,12 +29,12 @@ body {
 
 .dark-mode {
   --box-background: #333;
-  --btn-dropdown-color:#A06CD5;
-  --btn-dropdown-color-hover:#6247AA;
-  --borde-color:#A06CD5;
-  --btn-active:#A06CD5;
-  --btn-active-hover:#6247AA;
-  --background-theme: invert(1) blur(2px);
+  --btn-dropdown-color: #a06cd5;
+  --btn-dropdown-color-hover: #6247aa;
+  --borde-color: #a06cd5;
+  --btn-active: #a06cd5;
+  --btn-active-hover: #6247aa;
+  --background-theme: invert(1) blur(2px) brightness(50%);
 }
 
 nav {
