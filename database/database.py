@@ -41,5 +41,4 @@ def get_db():
 
     except BaseException as error:
         print("Couldn't connect to MySQL DB")
-        print(error)
         exit(1)
