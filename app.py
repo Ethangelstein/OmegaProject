@@ -14,8 +14,7 @@ cursor = db.cursor(
 
 @app.route("/", methods=["GET"])
 def main():
-
-    return render_template("index.html", theme="dark")
+    return render_template("index.html")
 
 
 @app.route("/signup", methods=["GET", "POST"])
