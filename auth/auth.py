@@ -1,4 +1,3 @@
-import hashlib
 from flask import (
     Blueprint,
     flash,
@@ -14,7 +13,7 @@ from database.database import get_db
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
 
-from .utils import is_password_incorrect, is_valid_email
+from .utils import is_password_incorrect, is_valid_email, hash_password
 from utils import throwErrorTemplate
 
 
@@ -59,18 +58,13 @@ def signup():
 
         sql = "insert into user (username, email, password) values(%s, %s, %s)"
 
-        # Hash password
-        salt = "NJOXSA?!#"
-
-        # Concatenar la contraseña y la salt
-        salted_password = password.encode("utf-8") + salt.encode("utf-8")
-
-        # Calcular el hash SHA256 de la contraseña y la salt
-        hashed_password = hashlib.sha256(salted_password).hexdigest()
+        hashed_password = hash_password(password)
 
         values = (username, email, hashed_password)
         cursor.execute(sql, values)
         database.commit()
+
+        session["email"] = email
 
         return redirect(url_for("main"))
     return render_template("signup.html")
