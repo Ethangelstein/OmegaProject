@@ -4,12 +4,64 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/style.css" />
+    <link rel="icon" type="image/png" href="static/images/Omega.png" />
+    <title>Omega - Error</title>
+    <link rel="stylesheet" href="../static/error.css" />
   </head>
   <body>
-    <h1>Error</h1>
-    <p>Algo salió mal</p>
-    <p>El campo {{field}} no puede tener un valor {{reason}} a {{value}}</p>
+    <nav>
+      <ul>
+        <li class="active">
+          <a href="/">Ѽ</a>
+        </li>
+        <li>
+          <a href="/auth/signup">Sign up</a>
+        </li>
+      </ul>
+      <div class="navRight">
+        <li class="user">
+          <img style="height: 40px" src="User.png" alt="" />
+        </li>
+        <div class="dropdown">
+          <button class="dropdown-btn">Categories</button>
+          <div class="dropdown-content">
+            <a href="#">Funny</a>
+            <a href="#">Kitties</a>
+            <a href="#">Finance</a>
+            <a href="#">Economy</a>
+            <a href="#">History</a>
+            <a href="#">Tourism</a>
+            <a href="#">Decoration</a>
+            <a href="#">Tecnology</a>
+            <a href="#">Security</a>
+            <a href="#">Sports</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <div class="box">
+        <div class="headingContainer">
+          <svg
+            viewBox="0 0 24 24"
+            width="48"
+            height="48"
+            stroke="#09f"
+            stroke-width="2"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="infoIcon"
+          >
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          <h1>Error</h1>
+        </div>
+        <h3>Ups... Algo salió mal</h3>
+        <p>{{message}}</p>
+      </div>
+    </main>
   </body>
 </html>
