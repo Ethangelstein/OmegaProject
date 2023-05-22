@@ -14,6 +14,8 @@ app.config.from_mapping(
     DATABASE=os.environ.get("FLASK_DATABASE"),
 )
 
+app.secret_key = os.environ.get("FLASK_SECRET_KEY", "SECRET_KEY")
+
 app.register_blueprint(auth)
 
 
