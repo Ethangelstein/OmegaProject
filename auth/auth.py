@@ -1,7 +1,5 @@
 from flask import (
     Blueprint,
-    flash,
-    g,
     render_template,
     request,
     url_for,
@@ -9,12 +7,12 @@ from flask import (
     redirect,
 )
 
+from utils import throw_error_template
 from database.database import get_db
+from .utils import is_password_incorrect, is_valid_email, hash_password
+
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
-
-from .utils import is_password_incorrect, is_valid_email, hash_password
-from utils import throwErrorTemplate
 
 
 @auth.route("/signup", methods=["GET", "POST"])
@@ -29,10 +27,10 @@ def signup():
         try:
             database, cursor = get_db()
         except BaseException as error:
-            return throwErrorTemplate(f"Server Error: {error}")
+            return throw_error_template(f"Server Error: {error}")
 
         if not username:
-            return throwErrorTemplate("El username tiene que estar completo")
+            return throw_error_template("El username tiene que estar completo")
 
         sql = "select * from user where email = %s"
 
@@ -41,20 +39,18 @@ def signup():
         found_users_emails = [user.get("email") for user in cursor.fetchall()]
 
         if email in found_users_emails:
-            return throwErrorTemplate(f"El email {email} ya está en uso")
+            return throw_error_template(f"El email {email} ya está en uso")
 
         # Checks
         if is_password_incorrect(password):
-            password_length = len(password)
             MIN_PASSWORD_LENGTH = 8
-            reason = "menor" if password_length < MIN_PASSWORD_LENGTH else "mayor"
 
-            return throwErrorTemplate(
+            return throw_error_template(
                 f"La contraseña tiene que ser mayor a {MIN_PASSWORD_LENGTH} caracteres"
             )
 
         if not is_valid_email(email):
-            return throwErrorTemplate(f"El email {email} es invalido")
+            return throw_error_template(f"El email {email} es invalido")
 
         sql = "insert into user (username, email, password) values(%s, %s, %s)"
 
@@ -68,28 +64,3 @@ def signup():
 
         return redirect(url_for("main"))
     return render_template("signup.html")
-
-
-@auth.route("/login", methods=["GET", "POST"])
-def login():
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        db, c = get_db()
-        error = None
-        c.execute("select * from user where username = %s", (username,))
-        user = c.fetchone()
-
-        if user is None:
-            error = "Usuario y/o contraseña inválida"
-        elif not check_password_hash(user, ["password"], password):
-            error = "Usuario y/o contrasela inválida"
-
-        if error is None:
-            session.clear()
-            session["user_id"] = user["id"]
-            return redirect(url_for("index"))
-
-        flash(error)
-
-    return render_template("login.html")
