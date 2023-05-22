@@ -8,13 +8,39 @@ html {
 }
 
 body {
+  --box-background: #fff;
+  --btn-dropdown-color: #4caf50;
+  --btn-dropdown-color-hover: #3e8e41;
+  --border-color: #4caf50;
+  --btn-active: #4caf50;
+  --btn-active-hover: #3e8e41;
+  --transition: 0.3s;
+  --background-theme: blur(3px) brightness(85%);
+  --dropdown-background-color:#fff;
+  --dropdown-text-color: #000;
+  --dropdown-hover-background:#eee;
+
   all: unset;
   font-family: sans-serif;
   height: 100%;
   display: block;
   margin: 0;
   background-image: url(https://img.freepik.com/vector-premium/patron-hojas-circulos-diferentes-colores-fondo-pantalla-patrones-fisuras_635153-64.jpg);
+  backdrop-filter: var(--background-theme);
   position: relative;
+}
+
+.dark-mode {
+  --box-background: #333;
+  --btn-dropdown-color: #a06cd5;
+  --btn-dropdown-color-hover: #6247aa;
+  --border-color: #a06cd5;
+  --btn-active: #a06cd5;
+  --btn-active-hover: #6247aa;
+  --background-theme: invert(1) blur(3px) brightness(50%);
+  --dropdown-background-color: #333;
+  --dropdown-text-color: #fff;
+  --dropdown-hover-background: #444;
 }
 
 nav {
@@ -39,14 +65,7 @@ ul {
 li {
   display: flex;
   position: relative;
-  transition: 0.3s;
-}
-
-li a {
-  color: white;
-  padding: 12px 16px;
-  text-decoration: none;
-  font-size: 20px;
+  transition: var(--transition);
 }
 
 li::after {
@@ -60,7 +79,7 @@ li::after {
   transform: scaleX(0);
   transform-origin: right;
   z-index: 3;
-  background-color: #4caf50;
+  background-color: var(--border-color);
 }
 
 li:hover::after {
@@ -68,8 +87,23 @@ li:hover::after {
   transform-origin: left;
 }
 
+li a {
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+li a:hover {
+  background-color: #2b2b2b;
+}
+
 .active {
-  background-color: #4caf50;
+  background-color: var(--btn-active);
+}
+
+.active:hover {
+  background-color: var(--btn-active-hover);
 }
 
 .navRight {
@@ -86,6 +120,21 @@ li:hover::after {
   cursor: pointer;
 }
 
+.themeSwitcher {
+  cursor: pointer;
+  align-items: center;
+  align-self: center;
+  border: none;
+  outline: none;
+  display: flex;
+  width: 2rem;
+  height: 2rem;
+  aspect-ratio: 1;
+  border-radius: 100rem;
+  background: #333333;
+  box-shadow: 5px 5px 11px #2b2b2b, -5px -5px 11px #4b4b4b;
+}
+
 .dropdown {
   position: relative;
 }
@@ -97,7 +146,7 @@ li:hover::after {
 }
 
 .dropdown-btn {
-  background-color: #4caf50;
+  background-color: var(--btn-dropdown-color);
   color: white;
   padding: 12px 16px;
   font-size: 20px;
@@ -105,12 +154,13 @@ li:hover::after {
   cursor: pointer;
   height: 100%;
   width: 160px;
+  transition: var(--transition);
 }
 
 .dropdown-content {
   position: absolute;
   width: 100%;
-  background-color: #eee;
+  background-color: var(--dropdown-background-color);
   right: 0;
   transform: translateY(-100%);
   transition: 300ms transform ease-out;
@@ -120,18 +170,18 @@ li:hover::after {
 }
 
 .dropdown-content a {
-  color: black;
+  color: var(--dropdown-text-color);
   padding: 12px 16px;
   text-decoration: none;
   display: block;
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: var(--dropdown-hover-background);
 }
 
 .dropdown:hover .dropdown-btn {
-  background-color: #3e8e41;
+  background-color: var(--btn-dropdown-color-hover);
 }
 
 .dropdown:hover .dropdown-content {
@@ -152,12 +202,13 @@ main {
 .box {
   max-width: 1000px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--box-background);
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0px 7px 18px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
+  transition: var(--transition);
 }
 
 @media only screen and (max-device-width: 480px) {
@@ -388,5 +439,3 @@ input::-webkit-inner-spin-button {
 .image {
   object-fit: contain;
 }
-
-
