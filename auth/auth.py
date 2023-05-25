@@ -1,15 +1,13 @@
-from flask import (
-    Blueprint,
-    render_template,
-    request,
-    url_for,
-    session,
-    redirect,
-)
+from flask import Blueprint, render_template, request, url_for, session, redirect, flash
 
 from utils import throw_error_template
 from database.database import get_db
-from .utils import is_password_incorrect, is_valid_email, hash_password
+from .utils import (
+    is_password_incorrect,
+    is_valid_email,
+    hash_password,
+    is_valid_password,
+)
 
 
 auth = Blueprint("auth", __name__, url_prefix="/auth")
@@ -34,7 +32,7 @@ def signup():
 
         sql = "select * from user where email = %s"
 
-        cursor.execute(sql, [email])
+        cursor.execute(sql, (email,))
 
         found_users_emails = [user.get("email") for user in cursor.fetchall()]
 
@@ -64,3 +62,31 @@ def signup():
 
         return redirect(url_for("main"))
     return render_template("signup.html")
+
+
+@auth.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+
+        try:
+            _, cursor = get_db()
+        except BaseException as error:
+            return throw_error_template(f"Server Error: {error}")
+
+        cursor.execute("select * from user where email = %s", (email,))
+        user = cursor.fetchone()
+
+        if user is None:
+            return throw_error_template("Usuario y/o contraseña inválida")
+
+        if not is_valid_password(password, user.get("password")):
+            return throw_error_template("Usuario y/o contraseña inválida")
+
+        session.clear()
+        session["email"] = email
+
+        return redirect(url_for("main"))
+
+    return render_template("login.html")
