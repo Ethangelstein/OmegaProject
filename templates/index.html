@@ -15,9 +15,14 @@
         <li class="active">
           <a href="/">Ѽ</a>
         </li>
+        {% if not logged_in %}
         <li>
           <a href="/auth/signup">Sign up</a>
         </li>
+        <li>
+          <a href="/auth/login">Login</a>
+        </li>
+        {% endif %}
       </ul>
       <div class="navRight">
         <li class="user">
