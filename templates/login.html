@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png" href="static/images/Omega.png" />
-    <title>Omega - Sign up</title>
+    <title>Omega - Login</title>
     <link rel="stylesheet" href="../static/signup.css" />
   </head>
   <body>
@@ -44,21 +44,12 @@
     </nav>
     <main>
       <div class="box">
-        <h2>Sign up</h2>
+        <h2>Login</h2>
         <form method="post" autocomplete="off">
-          <label>Username</label>
-          <input type="text" id="username" name="username" placeholder="John89" required maxlength="15" />
           <label>Email</label>
           <input type="text" id="email" name="email" placeholder="someone@example.com" required />
           <label>Password</label>
           <input type="password" id="password" name="password" required min="8" max="100" />
-          <div class="termsAndConditions">
-            <span>Do you accept the <a class="termsLink">terms and conditions</a>?</span>
-            <div>
-              <input type="checkbox" id="checkbox" class="hideCheckbox" />
-              <label for="checkbox" class="checkbox"></label>
-            </div>
-          </div>
           <input type="submit" value="Done" class="submit" />
         </form>
       </div>
