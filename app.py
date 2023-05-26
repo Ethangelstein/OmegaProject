@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 
 from auth.auth import auth
 
@@ -21,7 +21,9 @@ app.register_blueprint(auth)
 
 @app.route("/", methods=["GET"])
 def main():
-    return render_template("index.html")
+    logged_in = session.get("email")
+
+    return render_template("index.html", logged_in=logged_in)
 
 
 if __name__ == "__main__":
