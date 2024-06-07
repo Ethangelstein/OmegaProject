@@ -1,20 +1,26 @@
-import os
-
 from flask import Flask, render_template, session
 
 from auth.auth import auth
+from settings import (
+    FLASK_SECRET_KEY,
+    DATABASE_HOST,
+    DATABASE_PASSWORD,
+    DATABASE_USER,
+    DATABASE,
+)
 
 app = Flask(__name__)
 
+
 app.config.from_mapping(
-    SECRET_KEY="mikey",
-    DATABASE_HOST=os.environ.get("FLASK_DATABASE_HOST"),
-    DATABASE_PASSWORD=os.environ.get("FLASK_DATABASE_PASSWORD"),
-    DATABASE_USER=os.environ.get("FLASK_DATABASE_USER"),
-    DATABASE=os.environ.get("FLASK_DATABASE"),
+    SECRET_KEY=FLASK_SECRET_KEY,
+    DATABASE_HOST=DATABASE_HOST,
+    DATABASE_PASSWORD=DATABASE_PASSWORD,
+    DATABASE_USER=DATABASE_USER,
+    DATABASE=DATABASE,
 )
 
-app.secret_key = os.environ.get("FLASK_SECRET_KEY", "SECRET_KEY")
+app.secret_key = FLASK_SECRET_KEY
 
 app.register_blueprint(auth)
 

@@ -23,6 +23,7 @@ def init_db():
     database, cursor = get_db()
     for i in instructions:
         cursor.execute(i)
+
     database.commit()
 
 
@@ -52,3 +53,9 @@ def get_db():
 
     print("Failed to connect to MySQL DB after", max_attempts, "attempts")
     exit(1)
+
+
+def close_db(e=None):
+    database = context.pop("database", None)
+    if database is not None:
+        database.close()
